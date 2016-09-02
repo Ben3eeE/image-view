@@ -9,7 +9,7 @@ describe "ImageEditorView", ->
     workspaceElement = atom.views.getView(atom.workspace)
     filePath = atom.project.getDirectories()[0].resolve('binary-file.png')
     filePath2 = atom.project.getDirectories()[0].resolve('binary-file-2.png')
-    editor = new ImageEditor(filePath)
+    editor = new ImageEditor(filePath: filePath)
     view = new ImageEditorView(editor)
     view.height(100)
     jasmine.attachToDOM(view.element)
@@ -104,22 +104,22 @@ describe "ImageEditorView", ->
   describe "when special characters are used in the file name", ->
     describe "when '?' exists in the file name", ->
       it "is replaced with %3F", ->
-        newEditor = new ImageEditor('/test/file/?.png')
+        newEditor = new ImageEditor(filePath: '/test/file/?.png')
         expect(newEditor.getEncodedURI()).toBe('file:///test/file/%3F.png')
 
     describe "when '#' exists in the file name", ->
       it "is replaced with %23", ->
-        newEditor = new ImageEditor('/test/file/#.png')
+        newEditor = new ImageEditor(filePath: '/test/file/#.png')
         expect(newEditor.getEncodedURI()).toBe('file:///test/file/%23.png')
 
     describe "when '%2F' exists in the file name", ->
       it "should properly encode the %", ->
-        newEditor = new ImageEditor('/test/file/%2F.png')
+        newEditor = new ImageEditor(filePath: '/test/file/%2F.png')
         expect(newEditor.getEncodedURI()).toBe('file:///test/file/%252F.png')
 
     describe "when multiple special characters exist in the file name", ->
       it "are all replaced with escaped characters", ->
-        newEditor = new ImageEditor('/test/file/a?#b#?.png')
+        newEditor = new ImageEditor(filePath: '/test/file/a?#b#?.png')
         expect(newEditor.getEncodedURI()).toBe('file:///test/file/a%3F%23b%23%3F.png')
 
   describe "when multiple images are opened at the same time", ->

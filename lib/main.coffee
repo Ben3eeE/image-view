@@ -31,4 +31,4 @@ imageExtensions = ['.bmp', '.gif', '.ico', '.jpeg', '.jpg', '.png', '.webp']
 openURI = (uriToOpen) ->
   uriExtension = path.extname(uriToOpen).toLowerCase()
   if _.include(imageExtensions, uriExtension)
-    new ImageEditor(uriToOpen)
+    new ImageEditor(filePath: uriToOpen)

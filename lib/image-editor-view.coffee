@@ -35,6 +35,9 @@ class ImageEditorView extends ScrollView
   attached: ->
     @disposables = new CompositeDisposable
 
+    if @editor.background
+      @imageContainer.attr('background', @editor.background)
+
     @loaded = false
     @mode = 'reset-zoom'
     @image.hide()
@@ -145,4 +148,5 @@ class ImageEditorView extends ScrollView
   # color - A {String} that gets used as class name.
   changeBackground: (color) ->
     return unless @loaded and @isVisible() and color
+    @editor.background = color
     @imageContainer.attr('background', color)

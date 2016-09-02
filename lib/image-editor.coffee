@@ -7,19 +7,20 @@ module.exports =
 class ImageEditor
   atom.deserializers.add(this)
 
-  @deserialize: ({filePath}) ->
-    if fs.isFileSync(filePath)
-      new ImageEditor(filePath)
+  @deserialize: (state={}) ->
+    if fs.isFileSync(state.filePath)
+      new ImageEditor(state)
     else
-      console.warn "Could not deserialize image editor for path '#{filePath}' because that file no longer exists"
+      console.warn "Could not deserialize image editor for path '#{state.filePath}' because that file no longer exists"
 
-  constructor: (filePath) ->
+  constructor: ({filePath,background}) ->
     @file = new File(filePath)
     @subscriptions = new CompositeDisposable()
     @emitter = new Emitter
+    @background = background
 
   serialize: ->
-    {filePath: @getPath(), deserializer: @constructor.name}
+    {filePath: @getPath(), background: @background, deserializer: @constructor.name}
 
   getViewClass: ->
     require './image-editor-view'
